@@ -155,9 +155,9 @@ const projects = [
 ];
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
@@ -167,8 +167,9 @@ export function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = projects.find((p) => p.id.toString() === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const project = projects.find((p) => p.id.toString() === id);
   
   if (!project) {
     return {
@@ -182,8 +183,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProjectPage({ params }: Props) {
-  const project = projects.find((p) => p.id.toString() === params.id);
+export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const project = projects.find((p) => p.id.toString() === id);
   
   if (!project) {
     notFound();
