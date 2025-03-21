@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 // Sample project data
 const projects = [
@@ -157,6 +158,7 @@ type Props = {
   params: {
     id: string;
   };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export function generateStaticParams() {
@@ -165,7 +167,7 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: Props) {
+export function generateMetadata({ params }: Props): Metadata {
   const project = projects.find((p) => p.id.toString() === params.id);
   
   if (!project) {
