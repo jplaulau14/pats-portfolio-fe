@@ -154,13 +154,6 @@ const projects = [
   },
 ];
 
-interface Props {
-  params: Promise<{
-    id: string;
-  }>;
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
 export function generateStaticParams() {
   return projects.map((project) => ({
     id: project.id.toString(),
