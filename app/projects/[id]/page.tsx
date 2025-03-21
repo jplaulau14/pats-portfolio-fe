@@ -154,12 +154,12 @@ const projects = [
   },
 ];
 
-type Props = {
+interface Props {
   params: {
     id: string;
   };
   searchParams: { [key: string]: string | string[] | undefined };
-};
+}
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -167,7 +167,7 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find((p) => p.id.toString() === params.id);
   
   if (!project) {
@@ -182,7 +182,7 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function ProjectPage({ params }: Props) {
+export default async function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.id.toString() === params.id);
   
   if (!project) {
